@@ -627,12 +627,114 @@
     }
 
     /* ===== RESPONSIVE ===== */
-    @media (max-width: 560px) {
-      .header-main { padding: 14px 16px; }
+    @media (max-width: 640px) {
+
+      /* --- Header --- */
+      header {
+        flex-direction: column;
+        min-height: unset;
+      }
+      .header-logo {
+        border-left: none;
+        border-bottom: 3px solid var(--black);
+        padding: 12px 20px;
+        justify-content: center;
+      }
+      .logo-wordmark { font-size: 1.5rem; }
+      .header-main {
+        padding: 14px 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
       .header-title { font-size: 1.2rem; }
-      .header-badge { display: none; }
+      .header-sub   { font-size: 0.78rem; }
+      .header-badge {
+        display: inline-block;
+        padding: 5px 14px;
+        font-size: 0.78rem;
+      }
+
+      /* --- Progress --- */
+      .progress-strip { padding: 0 16px; gap: 10px; height: 44px; }
+      .progress-label { font-size: 0.75rem; }
+      .progress-count { font-size: 0.8rem; }
+
+      /* --- Legend --- */
+      .legend { flex-wrap: wrap; }
+      .legend-item {
+        font-size: 0.72rem;
+        padding: 8px 14px;
+      }
+
+      /* --- Action bar --- */
+      .action-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 16px;
+        gap: 10px;
+      }
+      .share-btn { width: 100%; justify-content: center; }
+
+      /* --- Grid --- */
+      .grid-container { padding: 16px 10px 30px; }
       .grid { grid-template-columns: repeat(4, 1fr); }
-      .card-letter { font-size: 2rem; }
+      .card { padding: 10px 4px 8px; gap: 1px; }
+      .card-letter { font-size: 1.9rem; }
+      .card-name   { font-size: 0.52rem; }
+      .card-word   { font-size: 0.72rem; }
+      .card-emoji  { font-size: 0.95rem; }
+      .card-vote-mini { gap: 3px; margin-top: 3px; }
+      .vote-mini-btn  { padding: 3px 6px; font-size: 0.65rem; }
+
+      /* --- Activity --- */
+      .activity-section { padding: 0 10px; margin-bottom: 30px; }
+      .section-title    { font-size: 0.9rem; padding: 5px 14px; }
+      .activity-item    { font-size: 0.78rem; padding: 8px 14px; }
+
+      /* --- Modals --- */
+      .modal-overlay { padding: 0; align-items: flex-end; }
+      .modal {
+        max-width: 100%;
+        width: 100%;
+        border-left: none;
+        border-right: none;
+        border-bottom: none;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 24px 20px 32px;
+        max-height: 92vh;
+        overflow-y: auto;
+      }
+      .modal-header { gap: 12px; margin-bottom: 16px; padding-bottom: 14px; }
+      .modal-letter-box { width: 58px; height: 58px; font-size: 2.2rem; }
+      .modal-title { font-size: 0.95rem; }
+      .form-label  { font-size: 0.78rem; }
+      .emoji-grid  { grid-template-columns: repeat(8, 1fr); gap: 4px; }
+      .emoji-btn   { font-size: 1.1rem; padding: 4px; }
+      .submit-btn  { padding: 13px; font-size: 0.95rem; }
+
+      /* Vote modal */
+      .view-word   { font-size: 1.4rem; }
+      .vote-btn    { padding: 11px 8px; font-size: 0.85rem; }
+      .vote-question { font-size: 0.82rem; }
+
+      /* --- Toast --- */
+      .toast {
+        bottom: 16px;
+        left: 16px; right: 16px;
+        transform: none;
+        text-align: center;
+        white-space: normal;
+        font-size: 0.84rem;
+      }
+    }
+
+    /* Tiny screens */
+    @media (max-width: 380px) {
+      .grid { grid-template-columns: repeat(4, 1fr); }
+      .card-letter { font-size: 1.6rem; }
+      .card-name   { display: none; }
     }
   </style>
 </head>
