@@ -52,45 +52,53 @@ class Handler(SimpleHTTPRequestHandler):
         data = read_data()
         if idx is None or idx < 0 or idx >= len(data['letters']):
             return self.send_json({'error': 'حرف غير صحيح'}, 400)
-
-        letter = data['letters'][idx]
-        if letter['status'] != 'empty':
-            return self.send_json({'error': 'هذا الحرف مأخوذ بالفعل'}, 400)
         if not word or len(word) < 2:
             return self.send_json({'error': 'الكلمة قصيرة جداً'}, 400)
 
-        letter.update({'status':'pending','word':word,'emoji':emoji,'submitter':submitter,'votes':0,'upvotes':0,'downvotes':0})
-        data['activity'].insert(0, {'text': f'{submitter} اقترح كلمة "{word}" للحرف {letter["letter"]} 🟡','time':'منذ لحظة'})
+        letter = data['letters'][idx]
+        candidates = letter.get('candidates', [])
+
+        for c in candidates:
+            if c['word'].strip() == word:
+                return self.send_json({'error': 'هذه الكلمة مقترحة بالفعل'}, 400)
+
+        candidates.append({
+            'word': word,
+            'emoji': emoji,
+            'submitter': submitter,
+            'votes': 0
+        })
+        letter['candidates'] = candidates
+
+        data['activity'].insert(0, {
+            'text': f'{submitter} اقترح "{word}" للحرف {letter["letter"]} 🟡',
+            'time': 'منذ لحظة'
+        })
         data['activity'] = data['activity'][:20]
         write_data(data)
         self.send_json({'success': True, 'letter': letter})
 
     def handle_vote(self, body):
         idx = body.get('letterIndex')
-        vote = body.get('vote')
+        candidate_idx = body.get('candidateIndex')
         data = read_data()
 
         if idx is None or idx < 0 or idx >= len(data['letters']):
             return self.send_json({'error': 'حرف غير صحيح'}, 400)
 
         letter = data['letters'][idx]
-        if letter['status'] != 'pending':
-            return self.send_json({'error': 'لا يوجد اقتراح للتصويت عليه'}, 400)
+        candidates = letter.get('candidates', [])
 
-        if vote == 'up':
-            letter['upvotes'] = letter.get('upvotes', 0) + 1
-        else:
-            letter['downvotes'] = letter.get('downvotes', 0) + 1
+        if candidate_idx is None or candidate_idx < 0 or candidate_idx >= len(candidates):
+            return self.send_json({'error': 'اقتراح غير صحيح'}, 400)
 
-        if letter.get('upvotes', 0) >= 3:
-            letter['status'] = 'approved'
-            data['activity'].insert(0, {'text': f'تم اعتماد كلمة "{letter["word"]}" للحرف {letter["letter"]} ✅','time':'منذ لحظة'})
+        c = candidates[candidate_idx]
+        c['votes'] = c.get('votes', 0) + 1
 
-        if letter.get('downvotes', 0) >= 3:
-            rejected = letter['word']
-            letter.update({'status':'empty','word':'','emoji':'','submitter':'','votes':0,'upvotes':0,'downvotes':0})
-            data['activity'].insert(0, {'text': f'تم رفض كلمة "{rejected}" ❌','time':'منذ لحظة'})
-
+        data['activity'].insert(0, {
+            'text': f'صوّت لـ "{c["word"]}" في حرف {letter["letter"]} ❤️',
+            'time': 'منذ لحظة'
+        })
         data['activity'] = data['activity'][:20]
         write_data(data)
         self.send_json({'success': True, 'letter': letter})
@@ -100,8 +108,12 @@ class Handler(SimpleHTTPRequestHandler):
             return self.send_json({'error': 'غير مصرح'}, 403)
         idx = body.get('letterIndex')
         data = read_data()
-        letter = data['letters'][idx]
-        letter.update({'status':'empty','word':'','emoji':'','submitter':'','votes':0,'upvotes':0,'downvotes':0})
+        if idx is not None and 0 <= idx < len(data['letters']):
+            data['letters'][idx]['candidates'] = []
+        else:
+            for l in data['letters']:
+                l['candidates'] = []
+            data['activity'] = []
         write_data(data)
         self.send_json({'success': True})
 
@@ -123,5 +135,5 @@ class Handler(SimpleHTTPRequestHandler):
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 3000))
-    print(f'\n🌴 الأبجدية السعودية: http://localhost:{port}\n')
+    print(f'\n🌴 ألفبائية السعودية: http://localhost:{port}\n')
     HTTPServer(('0.0.0.0', port), Handler).serve_forever()
