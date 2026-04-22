@@ -45,20 +45,31 @@ def jsonbin_read():
         print(f'JSONBin read error: {e}')
         return default_data()
 
+_last_write_error = ''
+
 def jsonbin_write(data):
+    global _last_write_error
     url     = f'https://api.jsonbin.io/v3/b/{JSONBIN_BIN}'
     payload = json.dumps(data, ensure_ascii=False).encode('utf-8')
     req = urllib.request.Request(
         url, data=payload, method='PUT',
         headers={
-            'X-Master-Key':  JSONBIN_KEY,
-            'Content-Type':  'application/json'
+            'X-Master-Key':    JSONBIN_KEY,
+            'Content-Type':    'application/json',
+            'X-Bin-Versioning':'false'
         }
     )
     try:
         with urllib.request.urlopen(req, timeout=10) as r:
+            _last_write_error = ''
             return r.status == 200
+    except urllib.error.HTTPError as e:
+        body = e.read().decode('utf-8', errors='ignore')
+        _last_write_error = f'HTTP {e.code}: {body[:200]}'
+        print(f'JSONBin HTTPError: {_last_write_error}')
+        return False
     except Exception as e:
+        _last_write_error = str(e)
         print(f'JSONBin write error: {e}')
         return False
 
@@ -148,7 +159,7 @@ class Handler(SimpleHTTPRequestHandler):
         data['activity'] = data['activity'][:20]
         ok = write_data(data)
         if not ok:
-            return self.send_json({'error': 'فشل الحفظ — حاول مرة أخرى'}, 500)
+            return self.send_json({'error': f'فشل الحفظ: {_last_write_error}'}, 500)
         self.send_json({'success': True, 'letter': letter})
 
     def handle_vote(self, body):
@@ -174,7 +185,7 @@ class Handler(SimpleHTTPRequestHandler):
         data['activity'] = data['activity'][:20]
         ok = write_data(data)
         if not ok:
-            return self.send_json({'error': 'فشل الحفظ — حاول مرة أخرى'}, 500)
+            return self.send_json({'error': f'فشل الحفظ: {_last_write_error}'}, 500)
         self.send_json({'success': True, 'letter': letter})
 
     def handle_reset(self, body):
