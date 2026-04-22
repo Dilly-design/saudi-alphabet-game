@@ -1,0 +1,8 @@
+# Don't track compiled files
+__pycache__/
+*.pyc
+*.pyo
+
+# Local server files
+server.log
+*.tmp

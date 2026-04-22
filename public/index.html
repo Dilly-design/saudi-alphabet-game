@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>الأبجدية السعودية — متجر ٨</title>
+  <style>
+    /* ===== THMANYAH FONTS ===== */
+    @font-face {
+      font-family: 'ThmanyahDisplay';
+      src: url('fonts/thmanyahserifdisplay-Black.otf') format('opentype');
+      font-weight: 900; font-style: normal;
+    }
+    @font-face {
+      font-family: 'ThmanyahDisplay';
+      src: url('fonts/thmanyahserifdisplay-Bold.otf') format('opentype');
+      font-weight: 700; font-style: normal;
+    }
+    @font-face {
+      font-family: 'ThmanyahDisplay';
+      src: url('fonts/thmanyahserifdisplay-Medium.otf') format('opentype');
+      font-weight: 500; font-style: normal;
+    }
+    @font-face {
+      font-family: 'ThmanyahDisplay';
+      src: url('fonts/thmanyahserifdisplay-Regular.otf') format('opentype');
+      font-weight: 400; font-style: normal;
+    }
+    @font-face {
+      font-family: 'ThmanyahDisplay';
+      src: url('fonts/thmanyahserifdisplay-Light.otf') format('opentype');
+      font-weight: 300; font-style: normal;
+    }
+    @font-face {
+      font-family: 'ThmanyahText';
+      src: url('fonts/thmanyahseriftext-Black.otf') format('opentype');
+      font-weight: 900; font-style: normal;
+    }
+    @font-face {
+      font-family: 'ThmanyahText';
+      src: url('fonts/thmanyahseriftext-Bold.otf') format('opentype');
+      font-weight: 700; font-style: normal;
+    }
+    @font-face {
+      font-family: 'ThmanyahText';
+      src: url('fonts/thmanyahseriftext-Medium.otf') format('opentype');
+      font-weight: 500; font-style: normal;
+    }
+    @font-face {
+      font-family: 'ThmanyahText';
+      src: url('fonts/thmanyahseriftext-Regular.otf') format('opentype');
+      font-weight: 400; font-style: normal;
+    }
+    @font-face {
+      font-family: 'ThmanyahText';
+      src: url('fonts/thmanyahseriftext-Light.otf') format('opentype');
+      font-weight: 300; font-style: normal;
+    }
+    @font-face {
+      font-family: 'ThmanyahSans';
+      src: url('fonts/thmanyahsans-Black.otf') format('opentype');
+      font-weight: 900; font-style: normal;
+    }
+    @font-face {
+      font-family: 'ThmanyahSans';
+      src: url('fonts/thmanyahsans-Bold.otf') format('opentype');
+      font-weight: 700; font-style: normal;
+    }
+    @font-face {
+      font-family: 'ThmanyahSans';
+      src: url('fonts/thmanyahsans-Medium.otf') format('opentype');
+      font-weight: 500; font-style: normal;
+    }
+    @font-face {
+      font-family: 'ThmanyahSans';
+      src: url('fonts/thmanyahsans-Regular.otf') format('opentype');
+      font-weight: 400; font-style: normal;
+    }
+    @font-face {
+      font-family: 'ThmanyahSans';
+      src: url('fonts/thmanyahsans-Light.otf') format('opentype');
+      font-weight: 300; font-style: normal;
+    }
+
+    /* ===== THMANYAH BRAND PALETTE ===== */
+    :root {
+      --black:    #000000;
+      --white:    #FFFFFF;
+      --cream:    #F5EFEC;
+      --blue:     #0068FF;
+      --red:      #EF4632;
+      --maroon:   #6D1634;
+      --magenta:  #FF3DB3;
+      --yellow:   #FFBE00;
+      --navy:     #141531;
+      --green:    #0BA074;
+      --lavender: #C8C4E3;
+      --salmon:   #FF9471;
+      --ltyellow: #F5DF67;
+      --teal:     #98DBE6;
+      --ltpink:   #FFABC7;
+      --ltgreen:  #BCE9B5;
+      --beige:    #E8D9A5;
+      --offwhite: #F2EEE4;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'ThmanyahSans', sans-serif;
+      background: var(--cream);
+      color: var(--black);
+      min-height: 100vh;
+      direction: rtl;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: var(--black);
+      padding: 0;
+      display: flex;
+      align-items: stretch;
+      min-height: 90px;
+      border-bottom: 3px solid var(--black);
+    }
+    .header-logo {
+      background: var(--cream);
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-left: 3px solid var(--black);
+      flex-shrink: 0;
+    }
+    .logo-icon {
+      width: 42px; height: 42px;
+      background: var(--black);
+      border-radius: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; font-weight: 900; color: var(--cream);
+      font-family: 'ThmanyahSans', sans-serif;
+    }
+    .logo-text {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: var(--black);
+      line-height: 1.1;
+    }
+    .logo-text span { display: block; font-size: 0.7rem; font-weight: 600; color: #666; }
+
+    .header-main {
+      flex: 1;
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .header-title {
+      font-family: 'ThmanyahDisplay', serif;
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: 0.5px;
+    }
+    .header-sub {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 2px;
+    }
+    .header-badge {
+      background: var(--yellow);
+      color: var(--black);
+      font-weight: 900;
+      font-size: 0.85rem;
+      padding: 8px 18px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ===== PROGRESS BAR (Thmanyah style — full width colored stripe) ===== */
+    .progress-strip {
+      background: var(--white);
+      border-bottom: 2px solid var(--black);
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      height: 52px;
+      gap: 20px;
+    }
+    .progress-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--black);
+      white-space: nowrap;
+    }
+    .progress-track {
+      flex: 1;
+      height: 10px;
+      background: #e0e0e0;
+      border: 1.5px solid var(--black);
+      border-radius: 0;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--blue);
+      transition: width 0.6s ease;
+    }
+    .progress-count {
+      font-size: 0.9rem;
+      font-weight: 900;
+      color: var(--black);
+      white-space: nowrap;
+    }
+
+    /* ===== LEGEND ===== */
+    .legend {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid var(--black);
+      background: var(--cream);
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-left: 1.5px solid var(--black);
+      color: var(--black);
+    }
+    .legend-item:last-child { border-left: none; }
+    .dot { width: 12px; height: 12px; border: 1.5px solid var(--black); flex-shrink: 0; }
+    .dot-empty   { background: var(--cream); }
+    .dot-pending { background: var(--yellow); }
+    .dot-approved{ background: var(--green); }
+
+    /* ===== SHARE ===== */
+    .action-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 28px;
+      background: var(--cream);
+      border-bottom: 2px solid var(--black);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .action-bar-text {
+      font-size: 0.85rem;
+      color: #666;
+    }
+    .share-btn {
+      background: var(--black);
+      color: var(--white);
+      border: 2px solid var(--black);
+      padding: 9px 22px;
+      font-family: 'ThmanyahSans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .share-btn:hover { background: var(--white); color: var(--black); }
+
+    /* ===== COMPLETE BANNER ===== */
+    .complete-banner {
+      display: none;
+      background: var(--blue);
+      color: var(--white);
+      text-align: center;
+      padding: 22px;
+      border-bottom: 3px solid var(--black);
+    }
+    .complete-banner.show { display: block; }
+    .complete-banner h2 { font-size: 1.5rem; font-weight: 900; margin-bottom: 4px; }
+    .complete-banner p  { font-size: 0.9rem; opacity: 0.85; }
+
+    /* ===== GRID ===== */
+    .grid-container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 28px 20px 40px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 0;
+      border: 2.5px solid var(--black);
+    }
+
+    /* ===== CARDS ===== */
+    /* Each letter gets a color from the Thmanyah palette */
+    .card {
+      border: 1.5px solid var(--black);
+      padding: 16px 8px 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.12s, box-shadow 0.12s;
+      position: relative;
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+    }
+    .card:hover {
+      transform: scale(1.06);
+      z-index: 2;
+      box-shadow: 4px 4px 0 var(--black);
+    }
+
+    /* Color assignments — Thmanyah palette cycling */
+    .card[data-i="0"]  { background: var(--blue);     color: var(--white); }
+    .card[data-i="1"]  { background: var(--red);      color: var(--white); }
+    .card[data-i="2"]  { background: var(--yellow);   color: var(--black); }
+    .card[data-i="3"]  { background: var(--green);    color: var(--white); }
+    .card[data-i="4"]  { background: var(--magenta);  color: var(--white); }
+    .card[data-i="5"]  { background: var(--lavender); color: var(--black); }
+    .card[data-i="6"]  { background: var(--navy);     color: var(--white); }
+    .card[data-i="7"]  { background: var(--salmon);   color: var(--black); }
+    .card[data-i="8"]  { background: var(--ltyellow); color: var(--black); }
+    .card[data-i="9"]  { background: var(--teal);     color: var(--black); }
+    .card[data-i="10"] { background: var(--maroon);   color: var(--white); }
+    .card[data-i="11"] { background: var(--ltpink);   color: var(--black); }
+    .card[data-i="12"] { background: var(--blue);     color: var(--white); }
+    .card[data-i="13"] { background: var(--red);      color: var(--white); }
+    .card[data-i="14"] { background: var(--yellow);   color: var(--black); }
+    .card[data-i="15"] { background: var(--green);    color: var(--white); }
+    .card[data-i="16"] { background: var(--magenta);  color: var(--white); }
+    .card[data-i="17"] { background: var(--navy);     color: var(--white); }
+    .card[data-i="18"] { background: var(--salmon);   color: var(--black); }
+    .card[data-i="19"] { background: var(--ltyellow); color: var(--black); }
+    .card[data-i="20"] { background: var(--teal);     color: var(--black); }
+    .card[data-i="21"] { background: var(--maroon);   color: var(--white); }
+    .card[data-i="22"] { background: var(--ltgreen);  color: var(--black); }
+    .card[data-i="23"] { background: var(--lavender); color: var(--black); }
+    .card[data-i="24"] { background: var(--blue);     color: var(--white); }
+    .card[data-i="25"] { background: var(--red);      color: var(--white); }
+    .card[data-i="26"] { background: var(--green);    color: var(--white); }
+    .card[data-i="27"] { background: var(--yellow);   color: var(--black); }
+
+    /* Dimmed state for empty */
+    .card.empty { opacity: 0.45; }
+    .card.empty:hover { opacity: 1; }
+
+    /* Pending overlay */
+    .card.pending::after {
+      content: '⏳';
+      position: absolute;
+      top: 5px; right: 5px;
+      font-size: 0.7rem;
+    }
+
+    /* Approved checkmark */
+    .card.approved::after {
+      content: '✓';
+      position: absolute;
+      top: 5px; right: 7px;
+      font-size: 0.75rem;
+      font-weight: 900;
+      opacity: 0.8;
+    }
+
+    .card-letter {
+      font-family: 'ThmanyahDisplay', serif;
+      font-size: 2.8rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .card-name {
+      font-size: 0.6rem;
+      font-weight: 600;
+      opacity: 0.7;
+    }
+    .card-word {
+      font-family: 'ThmanyahText', serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+    .card-emoji { font-size: 1.1rem; }
+
+    /* Vote mini buttons on pending cards */
+    .card-vote-mini {
+      display: flex;
+      gap: 4px;
+      margin-top: 4px;
+    }
+    .vote-mini-btn {
+      background: rgba(255,255,255,0.25);
+      border: 1px solid rgba(0,0,0,0.2);
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      font-family: 'ThmanyahSans', sans-serif;
+      transition: background 0.12s;
+    }
+    .vote-mini-btn:hover { background: rgba(255,255,255,0.5); }
+
+    /* ===== ACTIVITY ===== */
+    .activity-section {
+      max-width: 960px;
+      margin: 0 auto 50px;
+      padding: 0 20px;
+    }
+    .section-title {
+      font-size: 1rem;
+      font-weight: 900;
+      background: var(--black);
+      color: var(--white);
+      display: inline-block;
+      padding: 6px 18px;
+      margin-bottom: 0;
+    }
+    .activity-list {
+      background: var(--white);
+      border: 2px solid var(--black);
+      border-top: none;
+      max-height: 180px;
+      overflow-y: auto;
+    }
+    .activity-item {
+      font-size: 0.84rem;
+      padding: 10px 18px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: #333;
+    }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-time { color: #bbb; font-size: 0.74rem; white-space: nowrap; }
+
+    /* ===== CANVAS ===== */
+    #confetti-canvas {
+      position: fixed; top:0; left:0;
+      width:100%; height:100%;
+      pointer-events: none; z-index: 999;
+    }
+
+    /* ===== MODAL ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--white);
+      border: 3px solid var(--black);
+      padding: 32px 28px 28px;
+      width: 100%;
+      max-width: 420px;
+      position: relative;
+      animation: modalIn 0.2s ease;
+      box-shadow: 8px 8px 0 var(--black);
+    }
+    @keyframes modalIn {
+      from { opacity:0; transform: translateY(12px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px; left: 14px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      width: 30px; height: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900;
+    }
+    .modal-close:hover { background: #333; }
+
+    /* Color-coded modal header based on letter color */
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 22px;
+      padding-bottom: 18px;
+      border-bottom: 2px solid var(--black);
+    }
+    .modal-letter-box {
+      width: 72px; height: 72px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'ThmanyahDisplay', serif;
+      font-size: 2.8rem; font-weight: 900;
+      flex-shrink: 0;
+      border: 2.5px solid var(--black);
+    }
+    .modal-title { font-size: 1rem; font-weight: 700; line-height: 1.4; }
+    .modal-title span { display: block; font-size: 0.8rem; color: #777; font-weight: 400; margin-top: 2px; }
+
+    .form-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .form-group { margin-bottom: 16px; }
+
+    .form-input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 2px solid var(--black);
+      border-radius: 0;
+      font-family: 'ThmanyahSans', sans-serif;
+      font-size: 1rem;
+      direction: rtl;
+      outline: none;
+      background: var(--cream);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .form-input:focus { border-color: var(--blue); background: var(--white); }
+    .form-input.error { border-color: var(--red); }
+
+    .emoji-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 5px;
+      margin-top: 6px;
+    }
+    .emoji-btn {
+      font-size: 1.25rem;
+      padding: 5px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      background: var(--cream);
+      transition: all 0.12s;
+      text-align: center;
+    }
+    .emoji-btn:hover { border-color: var(--black); background: var(--white); }
+    .emoji-btn.selected { border-color: var(--black); background: var(--yellow); }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--black);
+      color: var(--white);
+      border: 2.5px solid var(--black);
+      font-family: 'ThmanyahSans', sans-serif;
+      font-size: 1rem;
+      font-weight: 900;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      margin-top: 8px;
+      letter-spacing: 0.5px;
+    }
+    .submit-btn:hover { background: var(--white); color: var(--black); }
+
+    .error-msg { color: var(--red); font-size: 0.8rem; margin-top: 4px; display: none; }
+    .error-msg.show { display: block; }
+
+    /* ===== VIEW MODAL ===== */
+    .view-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding-bottom: 18px;
+      border-bottom: 2px solid var(--black);
+      margin-bottom: 20px;
+    }
+    .view-emoji-big { font-size: 3rem; }
+    .view-word { font-family: 'ThmanyahText', serif; font-size: 1.8rem; font-weight: 900; }
+    .view-by   { font-size: 0.8rem; color: #888; margin-top: 4px; }
+
+    .vote-section {
+      background: var(--cream);
+      border: 2px solid var(--black);
+      padding: 16px;
+    }
+    .vote-question { font-size: 0.88rem; font-weight: 600; margin-bottom: 12px; color: #333; }
+    .vote-btns { display: flex; gap: 10px; }
+    .vote-btn {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid var(--black);
+      font-family: 'ThmanyahSans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.12s, color 0.12s;
+    }
+    .vote-btn.up   { background: var(--ltgreen); color: var(--black); }
+    .vote-btn.up:hover   { background: var(--green); color: var(--white); }
+    .vote-btn.down { background: #ffe0e0; color: var(--black); }
+    .vote-btn.down:hover { background: var(--red); color: var(--white); }
+
+    .vote-counts {
+      display: flex; justify-content: center;
+      gap: 20px; margin-top: 10px;
+      font-size: 0.8rem; color: #888;
+    }
+
+    /* ===== TOAST ===== */
+    .toast {
+      position: fixed; bottom: 28px;
+      left: 50%; transform: translateX(-50%);
+      background: var(--black); color: var(--white);
+      padding: 12px 26px;
+      font-family: 'ThmanyahSans', sans-serif;
+      font-size: 0.9rem; font-weight: 600;
+      border: 2px solid var(--black);
+      z-index: 9999;
+      opacity: 0; transition: opacity 0.25s;
+      white-space: nowrap;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 560px) {
+      .header-main { padding: 14px 16px; }
+      .header-title { font-size: 1.2rem; }
+      .header-badge { display: none; }
+      .grid { grid-template-columns: repeat(4, 1fr); }
+      .card-letter { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<!-- HEADER -->
+<header>
+  <div class="header-logo">
+    <div class="logo-icon">٨</div>
+    <div class="logo-text">متجر ٨<span>ثمانية</span></div>
+  </div>
+  <div class="header-main">
+    <div>
+      <div class="header-title">الأبجدية السعودية 🌴</div>
+      <div class="header-sub">تعاون مع الجميع — كل حرف بكلمة سعودية أصيلة</div>
+    </div>
+    <div class="header-badge">تحدّي الأبجدية</div>
+  </div>
+</header>
+
+<!-- PROGRESS -->
+<div class="progress-strip">
+  <span class="progress-label">التقدم</span>
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill" style="width:0%"></div>
+  </div>
+  <span class="progress-count" id="progressText">0 / 28</span>
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="legend-item"><div class="dot dot-empty"></div>فارغة — انقر لتقترح</div>
+  <div class="legend-item"><div class="dot dot-pending"></div>تحت التصويت</div>
+  <div class="legend-item"><div class="dot dot-approved"></div>مكتملة ✓</div>
+</div>
+
+<!-- ACTION BAR -->
+<div class="action-bar">
+  <span class="action-bar-text">شارك الرابط مع أصدقائك وتحدّاهم يملأون الأحرف الباقية!</span>
+  <button class="share-btn" onclick="shareGame()">🔗 شارك اللعبة</button>
+</div>
+
+<!-- COMPLETE BANNER -->
+<div class="complete-banner" id="completeBanner">
+  <h2>🎉 اكتملت الأبجدية السعودية!</h2>
+  <p>شكراً للجميع — جهودكم جمعت أبجدية سعودية كاملة 🌴</p>
+</div>
+
+<!-- GRID -->
+<div class="grid-container">
+  <div class="grid" id="alphabetGrid"></div>
+</div>
+
+<!-- ACTIVITY -->
+<div class="activity-section">
+  <div class="section-title">⚡ النشاط الأخير</div>
+  <div class="activity-list" id="activityList">
+    <div class="activity-item"><span>لا يوجد نشاط بعد...</span></div>
+  </div>
+</div>
+
+<!-- ===== SUBMIT MODAL ===== -->
+<div class="modal-overlay" id="submitModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-header">
+      <div class="modal-letter-box" id="modalLetterBox">أ</div>
+      <div class="modal-title">
+        اقترح كلمة سعودية
+        <span>تبدأ بـ <strong id="modalLetterName">الألف</strong></span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">الكلمة السعودية</label>
+      <input type="text" class="form-input" id="wordInput" placeholder="مثال: أفلاج، أرامكو، أذان..." maxlength="20" />
+      <div class="error-msg" id="wordError">يرجى إدخال كلمة صحيحة</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">إيموجي يعبّر عنها</label>
+      <div class="emoji-grid" id="emojiGrid"></div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">اسمك (اختياري)</label>
+      <input type="text" class="form-input" id="nameInput" placeholder="مثال: محمد من الرياض" maxlength="30" />
+    </div>
+
+    <button class="submit-btn" onclick="submitWord()">← أرسل اقتراحك</button>
+  </div>
+</div>
+
+<!-- ===== VIEW MODAL ===== -->
+<div class="modal-overlay" id="viewModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeViewModal()">✕</button>
+    <div class="view-header">
+      <span class="view-emoji-big" id="viewEmoji">🌴</span>
+      <div>
+        <div class="view-word" id="viewWord">نخلة</div>
+        <div class="view-by" id="viewBy">اقترحه: مثال</div>
+      </div>
+    </div>
+    <div class="vote-section" id="voteSection">
+      <div class="vote-question">هل هذه الكلمة تعبّر عن السعودية وتستحق مكانها في الأبجدية؟</div>
+      <div class="vote-btns">
+        <button class="vote-btn up"   onclick="castVote('up')">👍 أيّدها</button>
+        <button class="vote-btn down" onclick="castVote('down')">👎 غيّرها</button>
+      </div>
+      <div class="vote-counts" id="voteCounts"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===========================
+   DATA & STATE
+=========================== */
+const EMOJIS = ['🌴','🏜️','🕌','⚔️','🐪','🌙','⭐','🌊','🏔️','🍊','🌿','🔥','💎','🎵','🏺','🌸','🦅','🐏','🌾','🍵','☕','🎯','🏆','💛','🤍','🌺','🫖','🧆','🍖','🌹','🎭','🕍'];
+
+// Thmanyah card colors (parallel to data-i)
+const CARD_COLORS = ['#0068FF','#EF4632','#FFBE00','#0BA074','#FF3DB3','#C8C4E3','#141531','#FF9471','#F5DF67','#98DBE6','#6D1634','#FFABC7','#0068FF','#EF4632','#FFBE00','#0BA074','#FF3DB3','#141531','#FF9471','#F5DF67','#98DBE6','#6D1634','#BCE9B5','#C8C4E3','#0068FF','#EF4632','#0BA074','#FFBE00'];
+const LIGHT_CARDS = [false,false,true,false,false,true,false,true,true,true,false,true,false,false,true,false,false,false,true,true,true,false,true,true,false,false,false,true];
+
+let alphabetData = [];
+let selectedEmoji = '🌴';
+let currentLetterIndex = -1;
+
+/* ===========================
+   INIT
+=========================== */
+async function init() {
+  await loadData();
+  renderEmojiGrid();
+  setInterval(loadData, 8000);
+}
+
+async function loadData() {
+  try {
+    const res = await fetch('/api/alphabet');
+    const data = await res.json();
+    alphabetData = data.letters;
+    renderGrid();
+    renderActivity(data.activity);
+    updateProgress();
+  } catch(e) {
+    if (!alphabetData.length) initOffline();
+  }
+}
+
+/* ===========================
+   RENDER GRID
+=========================== */
+function renderGrid() {
+  const grid = document.getElementById('alphabetGrid');
+  grid.innerHTML = alphabetData.map((l, i) => cardHTML(l, i)).join('');
+}
+
+function cardHTML(l, i) {
+  const textColor = LIGHT_CARDS[i] ? '#000' : '#fff';
+
+  if (l.status === 'approved') {
+    return `<div class="card approved" data-i="${i}" onclick="openViewModal(${i})" style="--card-text:${textColor}">
+      <div class="card-letter">${l.letter}</div>
+      <div class="card-emoji">${l.emoji}</div>
+      <div class="card-word">${l.word}</div>
+    </div>`;
+  } else if (l.status === 'pending') {
+    return `<div class="card pending" data-i="${i}" onclick="openViewModal(${i})">
+      <div class="card-letter">${l.letter}</div>
+      <div class="card-name">${l.name}</div>
+      <div class="card-emoji">${l.emoji || '⏳'}</div>
+      <div class="card-word" style="font-size:0.75rem">${l.word}</div>
+      <div class="card-vote-mini">
+        <button class="vote-mini-btn" onclick="event.stopPropagation();quickVote(${i},'up')">👍</button>
+        <button class="vote-mini-btn" onclick="event.stopPropagation();quickVote(${i},'down')">👎</button>
+      </div>
+    </div>`;
+  } else {
+    return `<div class="card empty" data-i="${i}" onclick="openSubmitModal(${i})">
+      <div class="card-letter">${l.letter}</div>
+      <div class="card-name">${l.name}</div>
+      <div class="card-word" style="font-size:0.7rem;opacity:0.5">+ أضف</div>
+    </div>`;
+  }
+}
+
+/* ===========================
+   PROGRESS
+=========================== */
+function updateProgress() {
+  const approved = alphabetData.filter(l => l.status === 'approved').length;
+  const pct = Math.round((approved / 28) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${approved} / 28`;
+  if (approved === 28) {
+    document.getElementById('completeBanner').classList.add('show');
+    launchConfetti();
+  }
+}
+
+/* ===========================
+   ACTIVITY
+=========================== */
+function renderActivity(activity) {
+  const list = document.getElementById('activityList');
+  if (!activity || !activity.length) return;
+  list.innerHTML = activity.map(a => `
+    <div class="activity-item">
+      <span>${a.text}</span>
+      <span class="activity-time">${a.time}</span>
+    </div>
+  `).join('');
+}
+
+/* ===========================
+   EMOJI GRID
+=========================== */
+function renderEmojiGrid() {
+  document.getElementById('emojiGrid').innerHTML = EMOJIS.map(e => `
+    <button class="emoji-btn ${e === selectedEmoji ? 'selected' : ''}" onclick="selectEmoji('${e}')">${e}</button>
+  `).join('');
+}
+function selectEmoji(emoji) {
+  selectedEmoji = emoji;
+  document.querySelectorAll('.emoji-btn').forEach(b => b.classList.toggle('selected', b.textContent === emoji));
+}
+
+/* ===========================
+   SUBMIT MODAL
+=========================== */
+function openSubmitModal(index) {
+  const l = alphabetData[index];
+  if (l.status !== 'empty') { openViewModal(index); return; }
+  currentLetterIndex = index;
+
+  const box = document.getElementById('modalLetterBox');
+  box.textContent = l.letter;
+  box.style.background = CARD_COLORS[index];
+  box.style.color = LIGHT_CARDS[index] ? '#000' : '#fff';
+
+  document.getElementById('modalLetterName').textContent = l.name;
+  document.getElementById('wordInput').value = '';
+  document.getElementById('nameInput').value = '';
+  document.getElementById('wordError').classList.remove('show');
+  document.getElementById('wordInput').classList.remove('error');
+  document.getElementById('submitModal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('submitModal').classList.remove('open');
+  currentLetterIndex = -1;
+}
+
+async function submitWord() {
+  const word = document.getElementById('wordInput').value.trim();
+  const name = document.getElementById('nameInput').value.trim();
+  const errEl = document.getElementById('wordError');
+  const inputEl = document.getElementById('wordInput');
+
+  if (!word || word.length < 2) {
+    errEl.textContent = 'يرجى إدخال كلمة (حرفين على الأقل)';
+    errEl.classList.add('show');
+    inputEl.classList.add('error');
+    return;
+  }
+  errEl.classList.remove('show');
+  inputEl.classList.remove('error');
+
+  try {
+    const res = await fetch('/api/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ letterIndex: currentLetterIndex, word, emoji: selectedEmoji, submitter: name || 'مجهول' })
+    });
+    const data = await res.json();
+    if (data.success) {
+      alphabetData[currentLetterIndex] = data.letter;
+      closeModal(); renderGrid(); updateProgress();
+      showToast('تم إرسال اقتراحك! يحتاج 3 أصوات للاعتماد 🗳️');
+      await loadData();
+    } else {
+      errEl.textContent = data.error || 'حدث خطأ';
+      errEl.classList.add('show');
+    }
+  } catch(e) {
+    // Offline
+    const l = alphabetData[currentLetterIndex];
+    l.status = 'pending'; l.word = word; l.emoji = selectedEmoji;
+    l.submitter = name || 'مجهول'; l.upvotes = 0; l.downvotes = 0;
+    closeModal(); renderGrid(); updateProgress();
+    showToast('تم إرسال اقتراحك! 🎉');
+  }
+}
+
+/* ===========================
+   VIEW MODAL
+=========================== */
+function openViewModal(index) {
+  const l = alphabetData[index];
+  currentLetterIndex = index;
+  document.getElementById('viewEmoji').textContent = l.emoji || '✨';
+  document.getElementById('viewWord').textContent = l.word;
+  document.getElementById('viewBy').textContent = `اقترحه: ${l.submitter || 'مجهول'}`;
+
+  const vs = document.getElementById('voteSection');
+  const vc = document.getElementById('voteCounts');
+  if (l.status === 'pending') {
+    vs.style.display = 'block';
+    vc.textContent = `👍 ${l.upvotes||0}  ·  👎 ${l.downvotes||0}  ·  يحتاج 3 أصوات للاعتماد`;
+  } else {
+    vs.style.display = 'none';
+  }
+  document.getElementById('viewModal').classList.add('open');
+}
+function closeViewModal() {
+  document.getElementById('viewModal').classList.remove('open');
+  currentLetterIndex = -1;
+}
+
+async function castVote(type) {
+  if (currentLetterIndex < 0) return;
+  try {
+    const res = await fetch('/api/vote', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ letterIndex: currentLetterIndex, vote: type })
+    });
+    const data = await res.json();
+    if (data.success) {
+      alphabetData[currentLetterIndex] = data.letter;
+      closeViewModal(); renderGrid(); updateProgress();
+      showToast(type === 'up' ? 'صوتك سُجِّل 👍' : 'رأيك مهم 👎');
+      await loadData();
+    }
+  } catch(e) {
+    const l = alphabetData[currentLetterIndex];
+    if (type === 'up') {
+      l.upvotes = (l.upvotes||0)+1;
+      if (l.upvotes >= 3) { l.status='approved'; showToast('تم اعتماد الكلمة! ✅'); }
+      else showToast('صوتك سُجِّل 👍');
+    } else {
+      l.downvotes = (l.downvotes||0)+1;
+      if (l.downvotes >= 3) { l.status='empty';l.word='';l.emoji='';l.submitter=''; showToast('تم رفض الكلمة ❌'); }
+      else showToast('رأيك مهم 👎');
+    }
+    closeViewModal(); renderGrid(); updateProgress();
+  }
+}
+
+async function quickVote(index, type) {
+  currentLetterIndex = index;
+  await castVote(type);
+}
+
+/* ===========================
+   SHARE
+=========================== */
+function shareGame() {
+  const url = window.location.href;
+  const text = `🌴 ساعدني أكمّل الأبجدية السعودية!\nكل حرف بكلمة سعودية — شارك اقتراحك:\n${url}`;
+  if (navigator.share) navigator.share({ title: 'الأبجدية السعودية', text, url });
+  else { navigator.clipboard?.writeText(url); showToast('تم نسخ الرابط! 🔗'); }
+}
+
+/* ===========================
+   TOAST
+=========================== */
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.style.opacity = '1', 10);
+  setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 300); }, 2800);
+}
+
+/* ===========================
+   CONFETTI
+=========================== */
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+  const colors = ['#0068FF','#EF4632','#FFBE00','#0BA074','#FF3DB3','#FFABC7','#6D1634'];
+  const pieces = Array.from({length:130}, () => ({
+    x: Math.random()*canvas.width, y: Math.random()*-canvas.height,
+    w: Math.random()*14+6, h: Math.random()*7+4,
+    color: colors[Math.floor(Math.random()*colors.length)],
+    speed: Math.random()*4+2, angle: Math.random()*360, spin: (Math.random()-.5)*6
+  }));
+  let frame;
+  function draw() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p => {
+      ctx.save();
+      ctx.translate(p.x+p.w/2, p.y+p.h/2);
+      ctx.rotate(p.angle*Math.PI/180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+      ctx.restore();
+      p.y += p.speed; p.angle += p.spin;
+      if (p.y > canvas.height) p.y = -20;
+    });
+    frame = requestAnimationFrame(draw);
+  }
+  draw();
+  setTimeout(() => { cancelAnimationFrame(frame); ctx.clearRect(0,0,canvas.width,canvas.height); }, 5000);
+}
+
+/* ===========================
+   OFFLINE FALLBACK
+=========================== */
+function initOffline() {
+  const letters = ['أ','ب','ت','ث','ج','ح','خ','د','ذ','ر','ز','س','ش','ص','ض','ط','ظ','ع','غ','ف','ق','ك','ل','م','ن','هـ','و','ي'];
+  const names = ['الألف','الباء','التاء','الثاء','الجيم','الحاء','الخاء','الدال','الذال','الراء','الزاي','السين','الشين','الصاد','الضاد','الطاء','الظاء','العين','الغين','الفاء','القاف','الكاف','اللام','الميم','النون','الهاء','الواو','الياء'];
+  alphabetData = letters.map((l,i) => ({letter:l,name:names[i],status:'empty',word:'',emoji:'',submitter:'',votes:0,upvotes:0,downvotes:0}));
+  alphabetData[0]  = {...alphabetData[0],  status:'approved', word:'أرامكو',  emoji:'🏭', submitter:'مثال', votes:5};
+  alphabetData[21] = {...alphabetData[21], status:'approved', word:'كنافة',   emoji:'🍮', submitter:'مثال', votes:4};
+  alphabetData[24] = {...alphabetData[24], status:'approved', word:'نخلة',    emoji:'🌴', submitter:'مثال', votes:6};
+  alphabetData[3]  = {...alphabetData[3],  status:'pending',  word:'ثمامة',   emoji:'🌿', submitter:'سارة من جدة', upvotes:1, downvotes:0};
+  renderGrid(); updateProgress();
+}
+
+/* ===========================
+   CLOSE ON OVERLAY CLICK
+=========================== */
+document.getElementById('submitModal').addEventListener('click', e => { if (e.target===e.currentTarget) closeModal(); });
+document.getElementById('viewModal').addEventListener('click', e => { if (e.target===e.currentTarget) closeViewModal(); });
+document.getElementById('wordInput').addEventListener('keydown', e => { if (e.key==='Enter') submitWord(); });
+
+init();
+</script>
+</body>
+</html>
