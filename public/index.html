@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>الأبجدية السعودية — متجر ٨</title>
+  <title>ألفبائية السعودية — متجر ٨</title>
   <style>
     /* ===== THMANYAH FONTS ===== */
     @font-face {
@@ -100,8 +100,9 @@
       --teal:     #98DBE6;
       --ltpink:   #FFABC7;
       --ltgreen:  #BCE9B5;
-      --beige:    #E8D9A5;
+      --beige:    #E0D1A0;
       --offwhite: #F2EEE4;
+      --tan:      #E0D1A0;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -139,6 +140,19 @@
       line-height: 1;
       letter-spacing: -0.5px;
       white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .logo-mark {
+      display: inline-flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .logo-mark svg {
+      width: 22px;
+      height: 22px;
+      display: block;
     }
 
     .header-main {
@@ -745,11 +759,19 @@
 <!-- HEADER -->
 <header>
   <div class="header-logo">
-    <div class="logo-wordmark">متجر ٨</div>
+    <div class="logo-wordmark">
+      متجر
+      <span class="logo-mark">
+        <svg viewBox="0 0 22 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11 1 L21 19 L11 15 L1 19 Z" fill="#000000"/>
+        </svg>
+      </span>
+      ٨
+    </div>
   </div>
   <div class="header-main">
     <div>
-      <div class="header-title">الأبجدية السعودية 🌴</div>
+      <div class="header-title">ألفبائية السعودية 🌴</div>
       <div class="header-sub">تعاون مع الجميع — كل حرف بكلمة سعودية أصيلة</div>
     </div>
     <div class="header-badge">تحدّي الأبجدية</div>
@@ -780,7 +802,7 @@
 
 <!-- COMPLETE BANNER -->
 <div class="complete-banner" id="completeBanner">
-  <h2>🎉 اكتملت الأبجدية السعودية!</h2>
+  <h2>🎉 اكتملت ألفبائية السعودية!</h2>
   <p>شكراً للجميع — جهودكم جمعت أبجدية سعودية كاملة 🌴</p>
 </div>
 
@@ -1096,8 +1118,8 @@ async function quickVote(index, type) {
 =========================== */
 function shareGame() {
   const url = window.location.href;
-  const text = `🌴 ساعدني أكمّل الأبجدية السعودية!\nكل حرف بكلمة سعودية — شارك اقتراحك:\n${url}`;
-  if (navigator.share) navigator.share({ title: 'الأبجدية السعودية', text, url });
+  const text = `🌴 ساعدني أكمّل ألفبائية السعودية!\nكل حرف بكلمة سعودية — شارك اقتراحك:\n${url}`;
+  if (navigator.share) navigator.share({ title: 'ألفبائية السعودية', text, url });
   else { navigator.clipboard?.writeText(url); showToast('تم نسخ الرابط! 🔗'); }
 }
 
