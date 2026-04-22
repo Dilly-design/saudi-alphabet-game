@@ -365,20 +365,22 @@
       position:relative;
       box-shadow:8px 8px 0 var(--black);
       max-height:90vh;
-      display:flex;
-      flex-direction:column;
+      overflow-y:auto;
+      -webkit-overflow-scrolling:touch;
       animation:mIn .2s ease;
     }
     @keyframes mIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
 
-    /* Modal colored band */
+    /* Modal colored band — sticky so it stays visible while scrolling */
     .modal-band {
       padding:18px 20px 16px;
       display:flex;
       align-items:center;
       gap:14px;
       border-bottom:3px solid var(--black);
-      flex-shrink:0;
+      position:sticky;
+      top:0;
+      z-index:2;
     }
     .modal-letter-big {
       font-family:'ThmanyahDisplay',serif;
@@ -411,10 +413,7 @@
     }
     .modal-close:hover { background:rgba(0,0,0,0.35); }
 
-    /* Modal scrollable body */
     .modal-body {
-      overflow-y:auto;
-      flex:1;
       padding:0 20px 4px;
     }
 
@@ -610,7 +609,7 @@
       .card-word { font-size:0.62rem; }
       .activity-section { padding:0 8px; margin-bottom:24px; }
       .modal-overlay { padding:0; align-items:flex-end; }
-      .modal { max-width:100%; border-left:none; border-right:none; border-bottom:none; box-shadow:none; max-height:92vh; border-radius:0; }
+      .modal { max-width:100%; width:100%; border-left:none; border-right:none; border-bottom:none; box-shadow:none; max-height:88vh; border-radius:0; }
       .toast { left:12px; right:12px; transform:none; bottom:14px; text-align:center; white-space:normal; }
     }
     @media (max-width:380px) {
@@ -872,14 +871,28 @@ function openCard(i) {
 
   renderCands(l.candidates || [], i);
 
-  // Reset form
-  closeForm();
+  // Reset form fields
   document.getElementById('wordInput').value = '';
   document.getElementById('nameInput').value = '';
   document.getElementById('wordError').classList.remove('show');
   document.getElementById('wordInput').classList.remove('error');
 
+  // Auto-open form if letter is empty, otherwise close it
+  const hasCands = (l.candidates || []).length > 0;
+  if (!hasCands) {
+    formOpen = true;
+    document.getElementById('submitForm').classList.add('open');
+    document.getElementById('submitToggleLabel').textContent = '✕ إلغاء';
+  } else {
+    closeForm();
+  }
+
   document.getElementById('letterModal').classList.add('open');
+  // Scroll modal to top
+  setTimeout(() => {
+    const mb = document.querySelector('.modal-body');
+    if (mb) mb.scrollTop = 0;
+  }, 50);
 }
 
 function closeModal() {
