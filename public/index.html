@@ -171,16 +171,6 @@
 
     /* ===== POSTER GRID ===== */
     .grid-container { max-width:1008px; margin:0 auto; padding:24px 16px 40px; }
-    .grid-title {
-      font-family:'ThmanyahDisplay',serif;
-      font-size:0.8rem;
-      font-weight:700;
-      letter-spacing:1px;
-      text-transform:uppercase;
-      color:#999;
-      margin-bottom:10px;
-      padding-right:2px;
-    }
     .grid {
       display:grid;
       grid-template-columns:repeat(7, 1fr);
@@ -627,7 +617,6 @@
       .header-main { padding:12px 18px; flex-direction:column; align-items:flex-start; gap:6px; }
       .header-title { font-size:1.15rem; }
       .header-badge { font-size:0.75rem; padding:5px 12px; }
-      .progress-strip { padding:0 14px; gap:10px; height:42px; }
       .action-bar { flex-direction:column; align-items:stretch; padding:10px 14px; }
       .share-btn { justify-content:center; }
       .grid-container { padding:10px 8px 24px; }
@@ -883,10 +872,20 @@ function cardHTML(l, i) {
 /* ==============================
    ACTIVITY
 ============================== */
+function relativeTime(iso) {
+  try {
+    const diff = Math.floor((Date.now() - new Date(iso)) / 1000);
+    if (diff < 60)  return 'منذ لحظة';
+    if (diff < 3600) return `منذ ${Math.floor(diff/60)} د`;
+    if (diff < 86400) return `منذ ${Math.floor(diff/3600)} س`;
+    return `منذ ${Math.floor(diff/86400)} يوم`;
+  } catch { return ''; }
+}
+
 function renderActivity(act) {
   if (!act || !act.length) return;
   document.getElementById('activityList').innerHTML = act.map(a =>
-    `<div class="activity-item"><span>${a.text}</span><span class="activity-time">${a.time}</span></div>`
+    `<div class="activity-item"><span>${a.text}</span><span class="activity-time">${relativeTime(a.time)}</span></div>`
   ).join('');
 }
 
@@ -942,15 +941,14 @@ function openCard(i) {
     formOpen = true;
     document.getElementById('submitForm').classList.add('open');
     document.getElementById('submitToggleLabel').textContent = '✕ إلغاء';
+    setTimeout(() => document.getElementById('wordInput').focus(), 120);
   } else {
     closeForm();
   }
 
   document.getElementById('letterModal').classList.add('open');
-  // Scroll modal to top
   setTimeout(() => {
-    const mb = document.querySelector('.modal-body');
-    if (mb) mb.scrollTop = 0;
+    document.querySelector('.modal').scrollTop = 0;
   }, 50);
 }
 
@@ -1007,6 +1005,7 @@ function toggleForm() {
   formOpen = !formOpen;
   document.getElementById('submitForm').classList.toggle('open', formOpen);
   document.getElementById('submitToggleLabel').textContent = formOpen ? '✕ إلغاء' : '+ اقترح كلمة جديدة';
+  if (formOpen) setTimeout(() => document.getElementById('wordInput').focus(), 60);
 }
 function closeForm() {
   formOpen = false;
@@ -1027,8 +1026,27 @@ async function submitWord() {
     inEl.classList.add('error');
     return;
   }
+
+  // Soft warning: does the word start with the right letter?
+  const letterVariants = {
+    'أ':['أ','إ','آ','ا'], 'ا':['أ','إ','آ','ا'],
+    'ت':['ت','ة'], 'ة':['ت','ة'],
+    'ه':['ه','ة','هـ'], 'هـ':['ه','ة','هـ']
+  };
+  const currentLetter = alphabetData[currentIdx]?.letter;
+  const variants = letterVariants[currentLetter] || [currentLetter];
+  const firstChar = word.trim()[0];
+  if (!variants.includes(firstChar) && firstChar !== currentLetter) {
+    errEl.textContent = `⚠️ الكلمة يُفضّل أن تبدأ بحرف ${currentLetter} — هل أنت متأكد؟`;
+    errEl.classList.add('show');
+    inEl.style.borderColor = 'var(--yellow)';
+    // Allow submission on second try
+    if (!inEl.dataset.warned) { inEl.dataset.warned = '1'; return; }
+  }
+  inEl.dataset.warned = '';
   errEl.classList.remove('show');
   inEl.classList.remove('error');
+  inEl.style.borderColor = '';
 
   try {
     const res  = await fetch('/api/submit', {
@@ -1116,6 +1134,12 @@ function showToast(msg) {
   clearTimeout(toastT);
   toastT = setTimeout(() => t.style.opacity='0', 2800);
 }
+
+// Close modal on backdrop click or ESC
+document.getElementById('letterModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('letterModal')) closeModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 init();
 </script>

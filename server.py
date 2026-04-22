@@ -4,6 +4,7 @@ import urllib.request
 import urllib.error
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from urllib.parse import urlparse
+from datetime import datetime, timezone
 
 BASE_DIR   = os.path.dirname(os.path.abspath(__file__))
 PUBLIC_DIR = os.path.join(BASE_DIR, 'public')
@@ -147,7 +148,7 @@ class Handler(SimpleHTTPRequestHandler):
 
         data['activity'].insert(0, {
             'text': f'{submitter} اقترح "{word}" للحرف {letter["letter"]} 🟡',
-            'time': 'منذ لحظة'
+            'time': datetime.now(timezone.utc).isoformat()
         })
         data['activity'] = data['activity'][:20]
 
@@ -173,7 +174,7 @@ class Handler(SimpleHTTPRequestHandler):
 
         data['activity'].insert(0, {
             'text': f'صوّت لـ "{candidates[c_idx]["word"]}" في حرف {letter["letter"]} ❤️',
-            'time': 'منذ لحظة'
+            'time': datetime.now(timezone.utc).isoformat()
         })
         data['activity'] = data['activity'][:20]
 
