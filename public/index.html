@@ -962,14 +962,14 @@ function closeModal() {
 /* ==============================
    VOTE TRACKING (localStorage)
 ============================== */
-function voteKey(letterIdx, candidateIdx) {
-  return `voted_${letterIdx}_${candidateIdx}`;
+function voteKey(letterIdx, word) {
+  return `voted_${letterIdx}_${word}`;
 }
-function hasVoted(letterIdx, candidateIdx) {
-  return !!localStorage.getItem(voteKey(letterIdx, candidateIdx));
+function hasVoted(letterIdx, word) {
+  return !!localStorage.getItem(voteKey(letterIdx, word));
 }
-function markVoted(letterIdx, candidateIdx) {
-  localStorage.setItem(voteKey(letterIdx, candidateIdx), '1');
+function markVoted(letterIdx, word) {
+  localStorage.setItem(voteKey(letterIdx, word), '1');
 }
 
 /* ==============================
@@ -986,7 +986,7 @@ function renderCands(rawCands, letterIdx) {
     .sort((a,b) => b.votes - a.votes);
 
   list.innerHTML = sorted.map((c, rank) => {
-    const voted = hasVoted(letterIdx, c.origIdx);
+    const voted = hasVoted(letterIdx, c.word);
     const btn = voted
       ? `<span class="cand-voted-badge">صوّتَ ✓</span>`
       : `<button class="cand-vote-btn" onclick="voteFor(${letterIdx},${c.origIdx})">أيّدها</button>`;
@@ -1069,7 +1069,8 @@ async function voteFor(letterIdx, candidateIdx) {
     });
     const data = await res.json();
     if (data.success) {
-      markVoted(letterIdx, candidateIdx);
+      const votedWord = alphabetData[letterIdx].candidates[candidateIdx]?.word;
+      markVoted(letterIdx, votedWord);
       alphabetData[letterIdx] = data.letter;
       renderGrid();
       renderStats();
