@@ -9,9 +9,10 @@ BASE_DIR   = os.path.dirname(os.path.abspath(__file__))
 PUBLIC_DIR = os.path.join(BASE_DIR, 'public')
 DATA_FILE  = os.path.join(BASE_DIR, 'data', 'alphabet.json')
 
-JSONBIN_KEY = os.environ.get('JSONBIN_KEY', '')
-JSONBIN_BIN = os.environ.get('JSONBIN_BIN', '')
-USE_JSONBIN = bool(JSONBIN_KEY and JSONBIN_BIN)
+UPSTASH_URL   = os.environ.get('UPSTASH_REDIS_REST_URL', '')
+UPSTASH_TOKEN = os.environ.get('UPSTASH_REDIS_REST_TOKEN', '')
+USE_UPSTASH   = bool(UPSTASH_URL and UPSTASH_TOKEN)
+REDIS_KEY     = 'alphabet_data'
 
 LETTERS = [
     ("أ","الألف"),("ب","الباء"),("ت","التاء"),("ث","الثاء"),
@@ -29,51 +30,46 @@ def default_data():
         "activity": []
     }
 
-# ── JSONBin helpers ──────────────────────────────────────────────
+# ── Upstash Redis REST helpers ───────────────────────────────────
 
-def jsonbin_read():
-    url = f'https://api.jsonbin.io/v3/b/{JSONBIN_BIN}/latest'
-    req = urllib.request.Request(url, headers={'X-Master-Key': JSONBIN_KEY})
-    try:
-        with urllib.request.urlopen(req, timeout=8) as r:
-            body = json.loads(r.read())
-            data = body.get('record', {})
-            if not data.get('letters'):
-                return default_data()
-            return data
-    except Exception as e:
-        print(f'JSONBin read error: {e}')
-        return default_data()
-
-_last_write_error = ''
-
-def jsonbin_write(data):
-    global _last_write_error
-    url     = f'https://api.jsonbin.io/v3/b/{JSONBIN_BIN}'
-    payload = json.dumps(data, ensure_ascii=False).encode('utf-8')
-    req = urllib.request.Request(
-        url, data=payload, method='PUT',
+def upstash_cmd(command):
+    """Send a Redis command array to Upstash REST API."""
+    body = json.dumps(command).encode('utf-8')
+    req  = urllib.request.Request(
+        UPSTASH_URL,
+        data=body,
         headers={
-            'X-Master-Key':    JSONBIN_KEY,
-            'Content-Type':    'application/json',
-            'X-Bin-Versioning':'false'
+            'Authorization': f'Bearer {UPSTASH_TOKEN}',
+            'Content-Type':  'application/json'
         }
     )
+    with urllib.request.urlopen(req, timeout=10) as r:
+        return json.loads(r.read())
+
+def upstash_read():
     try:
-        with urllib.request.urlopen(req, timeout=10) as r:
-            _last_write_error = ''
-            return r.status == 200
-    except urllib.error.HTTPError as e:
-        body = e.read().decode('utf-8', errors='ignore')
-        _last_write_error = f'HTTP {e.code}: {body[:200]}'
-        print(f'JSONBin HTTPError: {_last_write_error}')
-        return False
+        resp = upstash_cmd(["GET", REDIS_KEY])
+        val  = resp.get('result')
+        if not val:
+            return default_data()
+        data = json.loads(val)
+        if not data.get('letters'):
+            return default_data()
+        return data
     except Exception as e:
-        _last_write_error = str(e)
-        print(f'JSONBin write error: {e}')
+        print(f'Upstash read error: {e}')
+        return default_data()
+
+def upstash_write(data):
+    try:
+        val  = json.dumps(data, ensure_ascii=False)
+        resp = upstash_cmd(["SET", REDIS_KEY, val])
+        return resp.get('result') == 'OK'
+    except Exception as e:
+        print(f'Upstash write error: {e}')
         return False
 
-# ── File helpers (local fallback) ────────────────────────────────
+# ── Local file fallback ──────────────────────────────────────────
 
 def file_read():
     try:
@@ -86,18 +82,15 @@ def file_write(data):
     os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
     with open(DATA_FILE, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
+    return True
 
 # ── Unified read/write ───────────────────────────────────────────
 
 def read_data():
-    return jsonbin_read() if USE_JSONBIN else file_read()
+    return upstash_read() if USE_UPSTASH else file_read()
 
 def write_data(data):
-    if USE_JSONBIN:
-        return jsonbin_write(data)
-    else:
-        file_write(data)
-        return True
+    return upstash_write(data) if USE_UPSTASH else file_write(data)
 
 # ── HTTP Handler ─────────────────────────────────────────────────
 
@@ -157,9 +150,9 @@ class Handler(SimpleHTTPRequestHandler):
             'time': 'منذ لحظة'
         })
         data['activity'] = data['activity'][:20]
-        ok = write_data(data)
-        if not ok:
-            return self.send_json({'error': f'فشل الحفظ: {_last_write_error}'}, 500)
+
+        if not write_data(data):
+            return self.send_json({'error': 'فشل الحفظ — حاول مرة أخرى'}, 500)
         self.send_json({'success': True, 'letter': letter})
 
     def handle_vote(self, body):
@@ -183,9 +176,9 @@ class Handler(SimpleHTTPRequestHandler):
             'time': 'منذ لحظة'
         })
         data['activity'] = data['activity'][:20]
-        ok = write_data(data)
-        if not ok:
-            return self.send_json({'error': f'فشل الحفظ: {_last_write_error}'}, 500)
+
+        if not write_data(data):
+            return self.send_json({'error': 'فشل الحفظ — حاول مرة أخرى'}, 500)
         self.send_json({'success': True, 'letter': letter})
 
     def handle_reset(self, body):
@@ -213,6 +206,6 @@ class Handler(SimpleHTTPRequestHandler):
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 3000))
-    mode = 'JSONBin ☁️' if USE_JSONBIN else 'ملف محلي 💾'
-    print(f'\n🌴 ألفبائية السعودية: http://localhost:{port}  [{mode}]\n')
+    mode = 'Upstash Redis ☁️' if USE_UPSTASH else 'ملف محلي 💾'
+    print(f'\n🌴 ألفبائية السعودية → http://localhost:{port}  [{mode}]\n')
     HTTPServer(('0.0.0.0', port), Handler).serve_forever()
