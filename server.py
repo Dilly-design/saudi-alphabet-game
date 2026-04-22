@@ -56,10 +56,11 @@ def jsonbin_write(data):
         }
     )
     try:
-        with urllib.request.urlopen(req, timeout=8):
-            pass
+        with urllib.request.urlopen(req, timeout=10) as r:
+            return r.status == 200
     except Exception as e:
         print(f'JSONBin write error: {e}')
+        return False
 
 # ── File helpers (local fallback) ────────────────────────────────
 
@@ -82,9 +83,10 @@ def read_data():
 
 def write_data(data):
     if USE_JSONBIN:
-        jsonbin_write(data)
+        return jsonbin_write(data)
     else:
         file_write(data)
+        return True
 
 # ── HTTP Handler ─────────────────────────────────────────────────
 
@@ -144,7 +146,9 @@ class Handler(SimpleHTTPRequestHandler):
             'time': 'منذ لحظة'
         })
         data['activity'] = data['activity'][:20]
-        write_data(data)
+        ok = write_data(data)
+        if not ok:
+            return self.send_json({'error': 'فشل الحفظ — حاول مرة أخرى'}, 500)
         self.send_json({'success': True, 'letter': letter})
 
     def handle_vote(self, body):
@@ -168,7 +172,9 @@ class Handler(SimpleHTTPRequestHandler):
             'time': 'منذ لحظة'
         })
         data['activity'] = data['activity'][:20]
-        write_data(data)
+        ok = write_data(data)
+        if not ok:
+            return self.send_json({'error': 'فشل الحفظ — حاول مرة أخرى'}, 500)
         self.send_json({'success': True, 'letter': letter})
 
     def handle_reset(self, body):

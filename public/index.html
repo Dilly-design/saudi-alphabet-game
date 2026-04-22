@@ -1007,6 +1007,8 @@ async function submitWord() {
   }
 }
 
+
+
 /* ==============================
    VOTE
 ============================== */
@@ -1038,7 +1040,6 @@ async function voteFor(letterIdx, candidateIdx) {
       }
 
       showToast('تم تسجيل صوتك ❤️');
-      setTimeout(loadData, 500);
     }
   } catch(e) { showToast('خطأ في الاتصال'); }
 }
