@@ -14,6 +14,7 @@ UPSTASH_URL   = os.environ.get('UPSTASH_REDIS_REST_URL', '')
 UPSTASH_TOKEN = os.environ.get('UPSTASH_REDIS_REST_TOKEN', '')
 USE_UPSTASH   = bool(UPSTASH_URL and UPSTASH_TOKEN)
 REDIS_KEY     = 'alphabet_data'
+RESET_SECRET  = os.environ.get('RESET_SECRET', 'saudi2025')
 
 LETTERS = [
     ("أ","الألف"),("ب","الباء"),("ت","التاء"),("ث","الثاء"),
@@ -183,7 +184,7 @@ class Handler(SimpleHTTPRequestHandler):
         self.send_json({'success': True, 'letter': letter})
 
     def handle_reset(self, body):
-        if body.get('secret') != 'saudi2025':
+        if body.get('secret') != RESET_SECRET:
             return self.send_json({'error': 'غير مصرح'}, 403)
         idx  = body.get('letterIndex')
         data = read_data()

@@ -4,6 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ألفبائية السعودية — متجر ٨</title>
+  <meta property="og:title" content="ألفبائية السعودية 🌴" />
+  <meta property="og:description" content="اقترح كلمة سعودية لكل حرف من الأبجدية وصوّت للأفضل — تحدّي جماعي من متجر ٨" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="ألفبائية السعودية 🌴" />
+  <meta name="twitter:description" content="اقترح كلمة سعودية لكل حرف وصوّت للأفضل — تحدّي جماعي من متجر ٨" />
   <style>
     /* ===== THMANYAH FONTS ===== */
     @font-face { font-family:'ThmanyahDisplay'; src:url('fonts/thmanyahserifdisplay-Black.otf') format('opentype'); font-weight:900; font-style:normal; }
@@ -729,13 +735,25 @@
         <label class="form-label">اسمك (اختياري)</label>
         <input type="text" class="form-input" id="nameInput" placeholder="مثال: نورة من جدة" maxlength="30" />
       </div>
-      <button class="submit-btn" onclick="submitWord()">← أرسل اقتراحك</button>
+      <button class="submit-btn" onclick="submitWord()">أرسل اقتراحك ←</button>
     </div>
 
   </div>
 </div>
 
 <script>
+/* ==============================
+   SECURITY
+============================== */
+function esc(str) {
+  return String(str)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;');
+}
+
 /* ==============================
    CONSTANTS
 ============================== */
@@ -855,14 +873,14 @@ function cardHTML(l, i) {
     : `<span class="card-plus">+</span>`;
 
   const footer = top
-    ? `<span class="card-word">${top.word}</span>${top.votes > 0 ? `<span class="card-votes-badge">❤️${top.votes}</span>` : ''}`
+    ? `<span class="card-word">${esc(top.word)}</span>${top.votes > 0 ? `<span class="card-votes-badge">❤️${top.votes}</span>` : ''}`
     : `<span class="card-hint">اضغط لتقترح</span>`;
 
   return `<div class="card ${isEmpty ? 'empty' : ''} ${vc}" data-i="${i}" onclick="openCard(${i})">
     ${multi}
     <div class="card-top">
-      <span class="card-letter">${l.letter}</span>
-      <span class="card-name">${l.name}</span>
+      <span class="card-letter">${esc(l.letter)}</span>
+      <span class="card-name">${esc(l.name)}</span>
     </div>
     <div class="card-illus">${illus}</div>
     <div class="card-bottom">${footer}</div>
@@ -885,7 +903,7 @@ function relativeTime(iso) {
 function renderActivity(act) {
   if (!act || !act.length) return;
   document.getElementById('activityList').innerHTML = act.map(a =>
-    `<div class="activity-item"><span>${a.text}</span><span class="activity-time">${relativeTime(a.time)}</span></div>`
+    `<div class="activity-item"><span>${esc(a.text)}</span><span class="activity-time">${relativeTime(a.time)}</span></div>`
   ).join('');
 }
 
@@ -990,8 +1008,8 @@ function renderCands(rawCands, letterIdx) {
       : `<button class="cand-vote-btn" onclick="voteFor(${letterIdx},${c.origIdx})">أيّدها</button>`;
     return `<div class="cand-row ${rank===0?'top':''} ${voted?'already-voted':''}">
       <span class="cand-rank">${rank+1}</span>
-      <span class="cand-emoji">${c.emoji||'✨'}</span>
-      <span class="cand-word">${c.word}</span>
+      <span class="cand-emoji">${esc(c.emoji||'✨')}</span>
+      <span class="cand-word">${esc(c.word)}</span>
       <span class="cand-votes">❤️ ${c.votes}</span>
       ${btn}
     </div>`;
@@ -1140,6 +1158,11 @@ document.getElementById('letterModal').addEventListener('click', e => {
   if (e.target === document.getElementById('letterModal')) closeModal();
 });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// Enter key submits the form
+document.getElementById('wordInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') { e.preventDefault(); submitWord(); }
+});
 
 init();
 </script>
