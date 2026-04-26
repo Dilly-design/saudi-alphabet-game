@@ -103,6 +103,13 @@ class Handler(SimpleHTTPRequestHandler):
     def log_message(self, format, *args):
         pass
 
+    def handle_error(self, request, client_address):
+        import sys
+        if sys.exc_info()[0] in (BrokenPipeError, ConnectionResetError):
+            pass  # client disconnected — normal
+        else:
+            super().handle_error(request, client_address)
+
     def do_GET(self):
         if urlparse(self.path).path == '/api/alphabet':
             self.send_json(read_data())
