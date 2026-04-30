@@ -2,7 +2,7 @@ import json
 import os
 import urllib.request
 import urllib.error
-from http.server import HTTPServer, SimpleHTTPRequestHandler
+from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from urllib.parse import urlparse
 from datetime import datetime, timezone
 
@@ -104,8 +104,9 @@ class Handler(SimpleHTTPRequestHandler):
         pass
 
     def handle_error(self, request, client_address):
-        import sys
-        if sys.exc_info()[0] in (BrokenPipeError, ConnectionResetError):
+        import sys, traceback
+        exc = sys.exc_info()[1]
+        if isinstance(exc, (BrokenPipeError, ConnectionResetError, OSError)):
             pass  # client disconnected — normal
         else:
             super().handle_error(request, client_address)
@@ -217,4 +218,4 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 3000))
     mode = 'Upstash Redis ☁️' if USE_UPSTASH else 'ملف محلي 💾'
     print(f'\n🌴 ألفبائية السعودية → http://localhost:{port}  [{mode}]\n')
-    HTTPServer(('0.0.0.0', port), Handler).serve_forever()
+    ThreadingHTTPServer(('0.0.0.0', port), Handler).serve_forever()
